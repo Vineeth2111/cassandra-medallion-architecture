@@ -4,7 +4,7 @@ import json
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 
-# ✅ Load token info from downloaded JSON
+# Load token info from downloaded JSON
 with open('linkedin-token.json') as f:
     secrets = json.load(f)
 
@@ -20,5 +20,5 @@ cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 session = cluster.connect()
 session.set_keyspace('linkedin')
 
-print("✅ Successfully connected to Astra DB!")
+print(" Successfully connected to Astra DB!")
 

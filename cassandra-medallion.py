@@ -4,7 +4,7 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 import json
 
-# -------------------- Connect to Astra DB --------------------
+# Connect to Astra DB 
 with open("linkedin-token.json") as f:
     secrets = json.load(f)
 
@@ -21,14 +21,15 @@ session = cluster.connect()
 
 print("\n✅ Connected to Astra DB!")
 
-# -------------------- Set Keyspace --------------------
+# Set Keyspace
 session.set_keyspace("linkedin")
 
-# -------------------- Load CSV --------------------
+# Load CSV
 df = pd.read_csv('sales_100.csv')
 print(f"\U0001f4be Loaded CSV with columns: {list(df.columns)}")
 
-# -------------------- Bronze Table --------------------
+# Bronze Table
+
 session.execute("""
 CREATE TABLE IF NOT EXISTS bronze_sales (
     id UUID PRIMARY KEY,
@@ -53,9 +54,10 @@ for _, row in df.iterrows():
         row['Sales Channel']
     ))
 
-print("✅ Bronze table loaded with raw data.")
+print("Bronze table loaded with raw data.")
 
-# -------------------- Silver Table --------------------
+# Silver Table 
+
 session.execute("""
 CREATE TABLE IF NOT EXISTS silver_sales (
     id UUID PRIMARY KEY,
@@ -82,9 +84,10 @@ for row in bronze_rows:
         row.channel
     ))
 
-print("✅ Silver table transformed and populated.")
+print(" Silver table transformed and populated.")
 
-# -------------------- Gold Table 1: Product Revenue --------------------
+# Gold Table 1: Product Revenue 
+
 session.execute("""
 CREATE TABLE IF NOT EXISTS gold_product_sales (
     product TEXT PRIMARY KEY,
@@ -105,9 +108,10 @@ for product in products:
             VALUES (%s, %s)
         """, (product, total))
 
-print("✅ Gold Table 1 (Product-wise) populated.")
+print(" Gold Table 1 (Product-wise) populated.")
 
-# -------------------- Gold Table 2: Country Revenue --------------------
+# Gold Table 2: Country Revenue 
+
 session.execute("""
 CREATE TABLE IF NOT EXISTS gold_country_sales (
     country TEXT PRIMARY KEY,
@@ -128,9 +132,10 @@ for country in countries:
             VALUES (%s, %s)
         """, (country, total))
 
-print("✅ Gold Table 2 (Country-wise) populated.")
+print("Gold Table 2 (Country-wise) populated.")
 
-# -------------------- Gold Table 3: Channel Revenue --------------------
+# Gold Table 3: Channel Revenue 
+
 session.execute("""
 CREATE TABLE IF NOT EXISTS gold_channel_sales (
     channel TEXT PRIMARY KEY,
@@ -151,5 +156,5 @@ for channel in channels:
             VALUES (%s, %s)
         """, (channel, total))
 
-print("✅ Gold Table 3 (Channel-wise) populated.\n")
-print("🎉 Medallion architecture flow completed successfully!")
+print(" Gold Table 3 (Channel-wise) populated.\n")
+print(" Medallion architecture flow completed successfully!")

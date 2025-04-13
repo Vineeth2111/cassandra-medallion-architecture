@@ -44,8 +44,8 @@ cassandra-medallion-architecture/
 ├── sales_100.csv                  # Input sales dataframe
 ├── secure-connect-linkedin.zip    # Safe package for Astra DB
 ├── linkedin-token.json            # Auth token (not committed)
-├── readme.md                      # Project doc (this file)
-│
+├── readme.md                      
+│# Project doc (this file)
 ├── cql/
 │   ├── bronze.cql                 # CQL for Bronze table
 │   ├── silver.cql                 # CQL for Silver table
@@ -53,9 +53,9 @@ cassandra-medallion-architecture/
 │
 
 └── screenshots/
-    ├── gold_table1.png            # Sales output by products
-    ├── gold_table2.png            # Sales output by country
-└── gold_table3.png            # Channel-wise sales output
+    ├── gold_table1.png            
+    ├── gold_table2.png            
+    └── gold_table3.png            
 
 --------
 
@@ -77,8 +77,8 @@ Running This Project:
    python cassandra-medallion.py
 
 5. When done, the output will be:
-   - ✅ Bronze, Silver, and Gold tables created and populated
-   - ✅ Saved screenshots for all Gold tables at /screenshots
+   - Bronze, Silver, and Gold tables created and populated
+   - Saved screenshots for all Gold tables at /screenshots
 
 ------
 
